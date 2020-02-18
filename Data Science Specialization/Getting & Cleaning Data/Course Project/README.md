@@ -9,8 +9,8 @@ Author: Mehdi Benyahia <br />
 4. Analysis R Script
 
 ## Review Criteria
-1.Analysis R Script
-2.Tidy Data Set
-3.Github Repo
-4.Codebook
-5.README 
+1. Analysis R Script
+2. Tidy Data Set
+3. Github Repo
+4. Codebook
+5. README 
