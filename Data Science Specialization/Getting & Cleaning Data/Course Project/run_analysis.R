@@ -14,7 +14,7 @@ unzip(zipfile = "dataFiles.zip")
 
 # Load The Data
 features_names <- read.table("./UCI HAR Dataset/features.txt", header = FALSE, col.names = c("index", "featureName"))
-activity_labels <- read.table("./UCI HAR Dataset/activity_labels.txt", header = FALSE, col.names = c("indexActivity","ActivityLabel"))
+activity_labels <- read.table("./UCI HAR Dataset/activity_labels.txt", header = FALSE, col.names = c("indexActivity","Activity"))
 
 ### Train Data Set
 dftrain <- read.table("./UCI HAR Dataset/train/X_train.txt", header = FALSE, col.names = features_names$featureName)
@@ -42,7 +42,7 @@ tidydata <- select(merge(activity_labels, Merged_data,  by="indexActivity"), -in
 tidydata <- tidydata[, c(2, 1, 3:88)]
 
 #Group by Subject and Activity and Summarize
-tidydata <- tidydata %>% group_by(subject, ActivityLabel) %>% summarise_all(mean)
+tidydata <- tidydata %>% group_by(subject, Activity) %>% summarise_all(mean)
 
 # Convert tidy data to text file
 write.table(tidydata,"tidydata.txt",sep=",",row.names=FALSE)
