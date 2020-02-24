@@ -6,16 +6,44 @@ Author: Mehdi BENYAHIA
 ### Source Data
 You can Find Data and there description here: [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
 
-### Data Set Information
-The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
+### Variables
+subject_test : subject IDs for test
 
-The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain.
+subject_train : subject IDs for train
 
-### Attribute Information
-For each record in the dataset it is provided: 
-- Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration. 
-- Triaxial Angular velocity from the gyroscope. 
-- A 561-feature vector with time and frequency domain variables. 
-- Its activity label. 
-- An identifier of the subject who carried out the experiment.
+X_test : values of variables in test
+
+X_train : values of variables in train
+
+y_test : activity ID in test
+
+y_train : activity ID in train
+
+activity_labels : Description of activity IDs in y_test and y_train
+
+features_names : description(label) of each variables in X_test and X_train
+
+Merged_data : bind of X_train and X_test
+
+tidydata : Final Dataset after All required transformations
+
+###Transformations
+
+# Load The Data
+Load the X_train data and y_train and bind them by columns (using cbind) and Adding Subject and Activity to the dataset then select the columns that contain "mean" and "sd" (using dplyr function select) resulting to train dataset.
+Repet the same process to X_test and y_test resulting to test dataset.
+
+# Merge Data
+Merging train and test datasets by rows.
+
+# Descriptive Names for Activities
+rename each levels with 2nd column of activity_levels.
+
+#Group by Subject and Activity and Summarize
+tidy data set with the average of each variable for each activity and each subject.
+
+# Convert tidy data to text file
+Finally output the data as "tidy_data.txt".
+
+
 
