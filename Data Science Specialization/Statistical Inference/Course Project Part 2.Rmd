@@ -1,0 +1,64 @@
+---
+title: "Statistical Inference Course Project Part 2"
+author: "Mehdi BENYAHIA"
+date: "10/03/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(plyr)
+```
+
+## Part 2: Basic Inferential Data Analysis on ToothGrowth Dataset
+
+The following was created for part 2 of Courera's Statistical Inference course project [1]. The data from "The Effect of Vitamin C on Tooth Growth in Guinea Pigs" was explored and found to show that increasing dosages of either orange juice or ascorbic acid resulted in longer teeth in the studied guinea pigs. Further, that at all but the highest dosages, orange juice was more effective than ascorbic acid.
+
+## Data Summary
+
+```{r data_summary, echo=TRUE}
+data("ToothGrowth")
+summary(ToothGrowth)
+```
+
+## Visualize the dataset
+
+```{r Visualize, echo=FALSE}
+ggplot(ToothGrowth, aes(x = supp, y = len, fill = supp))+
+  facet_grid(cols = vars(dose))+
+  geom_boxplot()+
+  labs(title = "Tooth Growth by Supplement Type and Dose",
+       x = "Supplement Type",
+       y = "Tooth Length")+
+  theme_classic()
+```
+
+## Computing Confidence Intervals
+
+```{r Confidence_Intervals, echo=FALSE}
+data <- data.frame(len = ToothGrowth$len, supp = ToothGrowth$supp, dose = as.factor(ToothGrowth$dose))
+summaries <- ddply(data, .(supp, dose), summarize, mean = mean(len), sd = sd(len), n = length(len))
+summaries$min <- summaries$mean - (qt(.975, (summaries$n-1) * summaries$sd / sqrt(summaries$n)))
+summaries$max <- summaries$mean + (qt(.975, (summaries$n-1) * summaries$sd / sqrt(summaries$n)))
+summaries
+```
+
+```{r Confidence_Intervals_Plot}
+g <- ggplot(summaries)
+g <- g + labs(title = "Comparing length (confidence intervals) by dose", x = "supplement", y = "tooth length")
+g <- g + geom_crossbar(
+  aes(ymin = min, ymax = max, x = supp, y = min, fill = dose),
+  fatten = 0
+)
+g <- g + facet_wrap(~dose)
+g
+```
+
+## Results
+
+Based on the summary above we can say (with 95% of sure that):
+
+- lengths when using OJ (.5 dose) bigger than  VC (.5 dose)
+- lengths when using OJ (1.0 dose) bigger than VC (1.0 dose)
+- lengths when using 2.0 of both OJ and VC are similar.

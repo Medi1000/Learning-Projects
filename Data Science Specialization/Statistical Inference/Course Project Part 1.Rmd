@@ -1,0 +1,60 @@
+---
+title: "Statistical Inference Course Project Part 1"
+author: "Mehdi BENYAHIA"
+date: "10/03/2020"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+## Part 1: Simulations
+
+The following was created for part 1 of Courera's Statistical Inference course project. Data was be simulated from the exponential distribution and was used to investigate the Central Limit Theorem. It was found that taking averages of sets of samples of the exponential distribution produced an approximately Normal distribution, while the distribution without means was not approximately normal.
+
+## Simulation
+
+Simulation data is created from the exponential distribution.
+
+```{r create_simulation}
+set.seed(150)
+lambda <- 0.2
+n <- 40
+number_simulations <- 1000
+
+simulated_sample <- replicate(number_simulations, rexp(n, lambda))
+means_exp <- apply(simulated_sample, 2, mean)
+```
+
+## Sample Mean vs Theoretical Mean
+```{r means}
+sample_mean <- mean(means_exp)
+theo_mean <- 1 / lambda
+diff_means <- abs(theo_mean - sample_mean)
+```
+The diffrence between the Sample Mean and Theoretical Mean is : `r round(diff_means, 3)`
+The sample mean and the theoretical mean are very close.
+
+
+## Sample Variance vs theoretical variance
+```{r variances}
+sample_var <- var(means_exp)
+theo_var  <- (1 / lambda)^2 / (n)
+diff_var <- abs(sample_var - theo_var)
+```
+The diffrence between the Sample Variance and Theoretical Variance is : `r round(diff_var, 3)`
+Both variance values are very close to each other.
+
+## Distribution
+
+You can also embed plots, for example:
+
+```{r means_exp, echo=FALSE}
+hist(means_exp, prob=TRUE, main="Mean Distribution", breaks=30)
+lines(density(means_exp), lwd=3, col="red")
+```
