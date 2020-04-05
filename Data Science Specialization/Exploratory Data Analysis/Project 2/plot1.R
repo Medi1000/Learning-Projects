@@ -14,5 +14,5 @@ emissions_by_year <- aggregate(emissions_data$Emissions, by=list(year=emissions_
 
 #Plot 1
 png("plot1.png", width=480, height=480)
-barplot(emissions_by_year$x, names.arg = emissions_by_year$year, main="Total Emissions of PM2.5 in Baltimore City", xlab="Total emissions of PM2.5 (tons)", ylab="Year", col = "blue")
+barplot(emissions_by_year$x, names.arg = emissions_by_year$year, main="Total Emissions of PM2.5 in United States", xlab="Total emissions of PM2.5 (tons)", ylab="Year", col = "blue")
 dev.off()
